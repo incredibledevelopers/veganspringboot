@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/loggedin-layout}">
+   	<head>
+    	<script type="text/javascript" th:src="@{js/orders.js}"></script>	 
+   	</head>
+	<body>
+	<div layout:fragment="content">
+		<form action="#" th:action="@{/markDelivered}" th:object="${order}" id="ordersForm" method="post">
+		<div class="container applicationHost">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item active">Home</li>
+			</ol>
+			<h5>Pending Orders</h5>
+			<div th:if="${order != null && order.message != null}" class="alert alert-warning alert-dismissable">
+				    <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+				    <strong th:text="${order.message}"></strong>
+			</div>
+			
+				<button type="button" onClick="window.location.href='orders'" class="btn btn-outline-primary btn-sm">Refresh</button>
+				<button type="button" onclick="javascript:markDelivered()" class="btn btn-success btn-sm">Mark Delivered</button>
+				<button type="button" onclick="javascript:showMarkDelWithChargesModal()" 
+					class="btn btn-outline-success btn-sm">Mark Delivered With Charges</button>
+				<button type="button" onclick="javascript:showCancelOrderModal()" 
+					class="btn btn-secondary btn-sm">Cancel Order</button>	
+				<br/><br/>
+				<div class="input-group"> <span class="input-group-addon">Filter :&nbsp;</span>
+					    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+				</div>
+				<br/>
+				<table class="table w-auto small table-hover" id="ordersTable">
+					<thead>
+						 <tr>
+						 	<th>#</th>
+						    <th>Order Id</th>
+						    <th>Customer</th>
+						    <th>Mobile</th>
+						    <th>Address</th>
+						    <th>Item Name</th>
+						    <th>Item Qty(in gms/pcs)</th>
+						    <th>Item Total Price</th>
+						    <th>Order Total</th>
+						    <th>Order Time</th>
+						</tr>
+					</thead>
+					<tbody class="searchable">	
+						<tr th:if="${#lists.isEmpty(pendingOrders)}">
+							<td colspan="8" align="center"> No Pending Orders </td> 
+						</tr>
+						<tr th:if="${not #lists.isEmpty(pendingOrders)}" th:each="order : ${pendingOrders}">
+							<td>
+							    <span th:if="${order.mobileNumber} != null">
+							    	<input type="checkbox" id="orderIds" path="${orderIds}" name="orderIds" th:value="${order.orderId}">
+							    </span>
+							    <span th:unless="${order.mobileNumber} == null"></span>
+							</td> 
+					        <!-- <td th:text="${order.mobileNumber} != null ? ${order.orderId}:''"></td> -->
+					        <td><a th:href="@{/showOrder?d=}+ ${order.orderId}" th:text="${order.mobileNumber} != null ? ${order.orderId}:''"></a></td>
+					        <td th:text="${order.customerName}"></td>
+					        <td th:text="${order.mobileNumber}"></td>
+					        <td th:text="${order.orderAddress}"></td>
+					        <td th:text="${order.itemName}"></td>
+					        <td th:text="${order.itemQuantity}" align="right"></td>
+					        <td th:text="${order.itemTotalPrice}" align="right"></td>
+					        <td th:text="${order.mobileNumber} != null ? ${order.orderTotal}:''" align="right"></td>
+					        <td th:text="${order.mobileNumber} != null ? ${order.orderTime}:''"></td>
+					    </tr>
+				    </tbody>
+				</table> 
+				
+		</div>
+		<input type="hidden" name="cancellationReason" id="cancellationReasonVal" path="${cancellationReason}"/>
+		<input type="hidden" name="deliveryCharges" id="deliveryChargesVal" path="${deliveryCharges}" value="0"/>
+		<div class="modal" id="deliveryCharges">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-body">
+		             	<div class="form-group">
+					      <label for="deliveryChargesText"> Delivery Charges for this order(in &#x20B9;):</label>
+					      <input id="deliveryChargesText" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+					    	  class="form-control is-invalid" style="text-align: right" name="deliveryChargesText" path="${order.deliveryCharges}"
+					    	  placeholder="Delivery Charges" maxlength="4">
+					      <div class="invalid-feedback">(Required)These charges will be added to this order's total.</small></div>
+		        		</div>
+		      	</div>
+		    </div>
+	  		</div>
+	  	</div>	
+	  	<div class="modal" id="cancellationReason" title="Cancel Order" style="position: relative;z-index: 9999;">
+		    <div class="modal-dialog" role="document">
+		       <div class="modal-body">
+		             	<div class="form-group">
+					      <label for="cancellationReasonText"> Cancellation Reason:</label>
+					      <input id="cancellationReasonText" type="text"  name="cancellationReasonText"
+							  class="form-control is-invalid" placeholder="Cancellation Reason" maxlength="200">
+							<div class="invalid-feedback">This field is required.(Max. 200 chars.)</div>    
+					    </div>
+		        </div>
+		    </div>
+	  	</div>
+		</form>  
+		<div class="modal" id="someId">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-body">
+		             	<div class="form-group">
+					      <label for="deliveryChargesText">My Test</label>
+					      
+					    </div>
+		        </div>
+		      </div>
+		    </div>
+	  	</div>	
+	</div>	
+	
+</body>
+</html>
+
+

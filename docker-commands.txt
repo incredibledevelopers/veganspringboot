@@ -1,0 +1,9 @@
+D:\Amod\Projects\Angular\spring-boot-angular-ecommerce\vegan-server-1\vegan>docker build -t vegan-server .
+
+D:\Amod\Projects\Angular\spring-boot-angular-ecommerce\vegan-server-1\vegan>docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+vegan-server        latest              1f2f7fea1dd9        22 seconds ago      122MB
+openjdk             8-jdk-alpine        a3562aa0b991        4 months ago        105MB
+
+
+D:\Amod\Projects\Angular\spring-boot-angular-ecommerce\vegan-server-1\vegan>docker run -p 8000:8080 vegan-server

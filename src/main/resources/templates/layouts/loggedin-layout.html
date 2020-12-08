@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">ENRoot Farming(Admin)</title>
+	<meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+	<title>Layout page</title>
+	<link th:href="@{css/bootstrap.min.css}" rel = "stylesheet"/>
+    <link th:href="@{css/jquery-ui.min.css}" rel = "stylesheet"/>
+    <link th:href="@{css/styles.css}" rel = "stylesheet"/>
+	<script th:src="@{js/jquery.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+    <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/jquery-ui.min.js}"></script>
+</head>
+<body>
+  <header>
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		  <a class="navbar-brand" href="#">ENRoot Farming(admin)</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item">
+		        <a class="nav-link" href="orders">Orders</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="rate-card">Rate Card</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="get-search-orders">Search Orders</a>
+		      </li>
+		    </ul>
+		    <ul class="navbar-nav ml-auto">
+		    	<a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+	                Welcome [[${#httpServletRequest.remoteUser}]] <b class="caret"></b>
+	            </a>
+	            <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
+	                <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+	            </div>
+		    	<!-- <li class="nav-item">
+		    		<a class="nav-link" href="rate-card"><small id="emailHelp" class="form-text text-muted"></small>Logout</a>
+		    		
+		      	</li>-->
+		    </ul>
+		  </div>
+		</nav>
+  </header>
+  <section layout:fragment="content">
+    <p></p>
+  </section>
+  <footer>
+    <p layout:fragment="footer"></p>
+  </footer>  
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/loggedin-layout}">
+	<head>
+    	<script th:src="@{js/rate-card.js}"></script>	 
+   	</head>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container applicationHost">
+				<ol class="breadcrumb">
+				  <li class="breadcrumb-item active">Home</li>
+				</ol>
+				<h5>Rate Card</h5>
+				<div th:if="${productForm != null && productForm.message != null}" class="alert alert-warning alert-dismissable">
+				    <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+				    <strong th:text="${productForm.message}"></strong>
+				</div>
+				<form action="#" th:action="@{/setItemRates}" th:object="${productForm}" method="post" id="productForm">
+					<button type="button" onclick="javascript:setItemRates()" class="btn btn-success btn-sm">Save Rates</button>
+					<button type="button" onclick="javascript:toggleItemStatus('Y')" class="btn btn-primary btn-sm">Set As Available Items</button>
+					<button type="button" onclick="javascript:toggleItemStatus('N')" class="btn btn-secondary btn-sm">Set As Items Not Available</button>
+					<button type="button" onclick="location.href='/rate-card'" class="btn btn-outline-primary btn-sm">Refresh</button>
+					<br/><br/>
+					<div class="input-group"> <span class="input-group-addon">Filter :&nbsp;</span>
+					    <input id="filter" type="text" class="form-control" placeholder="Type Item Name...">
+					</div>
+					<br/>
+					<table class="table table-hover" id="items-table">
+					  <thead>
+					    <tr>
+					      <th scope="col">Index</th>
+					       <th scope="col">#</th>
+					      <th scope="col">Item Name</th>
+					      <th scope="col">Item Category</th>
+					      <th scope="col">Item Price</th>
+					      <th scope="col">Item Availability</th>
+					      <th scope="col">Last Modified By</th>
+					    </tr>
+					  </thead>
+					  <tbody class="searchable">
+							<tr th:if="${#lists.isEmpty(productForm.products)}">
+								<td colspan="8" align="center"> No Items </td> 
+							</tr>
+							<tr th:if="${not #lists.isEmpty(productForm.products)}" th:each="product,itemStat  : ${productForm.products}">
+								<td th:text="${itemStat.index}+1"></td>
+								<td>
+								    <input type="checkbox" id="productIds" th:field="*{products[__${itemStat.index}__].itemId}" name="itemIds" 
+								    th:value="*{products[__${itemStat.index}__].itemId}">
+								</td> 
+						        <td th:text="${product.name}"></td>
+						        <td th:text="${product.itemCategory}"></td>
+						        <!-- <td>
+						        	<input type="text" th:field="*{products[__${itemStat.index}__].price}" th:value="${product.price}" 
+						        	align="right" size="5" maxlength="5" style="text-align: right"
+						        	onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpast="return false">&nbsp;/250 gms
+						        </td> -->
+						        <td th:if="${product.itemRate} == 'gms'">
+						        	<input type="text" th:field="*{products[__${itemStat.index}__].price}" th:value="${product.price}" 
+						        	align="right" size="5" maxlength="5" style="text-align: right"
+						        	onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpast="return false">&nbsp;/250 gms
+						        </td>
+						        <td th:if="${product.itemRate} == 'pcs'">
+						        	<input type="text" th:field="*{products[__${itemStat.index}__].price}" th:value="${product.price}" 
+						        	align="right" size="5" maxlength="5" style="text-align: right"
+						        	onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpast="return false">&nbsp;/1 pcs.
+						        </td>
+						        <td th:text="${product.itemAvailability} == 'Y' ? 'Yes':'No'"></td>
+						        <td th:text="${product.lastModifiedBy}"></td>
+						    </tr>
+					   </tbody> 
+					   <input type="hidden" name="itemStatus" id="itemStatus" path="${itemStatus}"/>   
+					</table> 
+				</form>	
+			</div>
+		</div>	
+	</body>
+</html>
+
+

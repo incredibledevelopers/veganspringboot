@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/loggedin-layout}">
+	<head>
+    	<script th:src="@{js/rate-card.js}"></script>	 
+   	</head>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="container applicationHost">
+				<ol class="breadcrumb">
+				  <li class="breadcrumb-item active">Home</li>
+				</ol>
+				<h5>Order Details</h5>
+				<div class="list-group" th:if="${not #lists.isEmpty(orderDetails)}" th:each="order : ${orderDetails}">
+				    <span th:if="${order.mobileNumber} != null">
+				    	<table class="table w-auto small table-hover" id="ordersTable">
+							<tbody class="searchable">	
+								<tr>								
+									<td>Customer Name : </td>
+							        <td th:text="${order.customerName}"></td>
+							   </tr>
+							   <tr>								
+									<td>Mobile : </td>
+							        <td th:text="${order.mobileNumber}"></td>
+							   </tr>
+							   <tr>								
+									<td>Address : </td>
+							        <td th:text="${order.orderAddress}"></td>
+							   </tr>
+							   <tr>								
+									<td>Order Status : </td>
+							        <td th:if="${order.orderStatus} eq 'P'">Pending</td>
+							        <td th:if="${order.orderStatus} eq 'D'">Delivered</td>
+				        			<td th:if="${order.orderStatus} eq 'C'">Cancelled</td>
+							   </tr>
+							   <tr>								
+									<td>Time : </td>
+							        <td th:text="${order.orderTime}"></td>
+							   </tr>
+							   <tr th:if="${order.cancellationReason} != null">								
+									<td>Cancellation Reason : </td>
+							        <td th:text="${order.cancellationReason}"></td>
+							   </tr>  
+						    </tbody>
+						</table>
+				    </span>
+				</div>
+				<table class="table w-auto small table-hover" id="ordersTable">
+					<thead>
+						 <tr>
+						 	<th>Item Name</th>
+						    <th>Item Qty(in gms/pcs)</th>
+						    <th>Item Total Price</th>
+						    <th>Delivery Charges</th>
+						    <th>Order Total</th>
+						</tr>
+					</thead>
+					<tbody class="searchable">	
+						<tr th:if="${#lists.isEmpty(orderDetails)}">
+							<td colspan="8" align="center"> No Pending Orders </td> 
+						</tr>
+						<tr th:if="${not #lists.isEmpty(orderDetails)}" th:each="order : ${orderDetails}">
+							<td th:text="${order.itemName}"></td>
+					        <td th:text="${order.itemQuantity}" align="right"></td>
+					        <td th:text="${order.itemTotalPrice}" align="right"></td>
+					        <td th:text="${order.mobileNumber} != null ? ${order.deliveryCharges}:''" align="right"></td>
+					        <td th:text="${order.mobileNumber} != null ? ${order.orderTotal}:''" align="right"></td>
+					    </tr>
+				    </tbody>
+				</table>
+			</div>
+		</div>	
+	</body>
+</html>
+

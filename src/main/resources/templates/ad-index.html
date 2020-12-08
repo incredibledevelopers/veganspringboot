@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      	layout:decorate="~{layouts/login-layout}">
+    <head>
+    <title>Vegan's Shoppie </title>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width,initial-scale=1"></meta>
+    <script type="text/javascript" th:src="@{js/jquery.min.js}"></script>
+  	<script type="text/javascript" th:src="@{js/bootstrap.min.js}"></script>
+  	<script type="text/javascript" th:src="@{js/common.js}"></script>
+  	<link type="css" rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+  	<link type="css" rel="stylesheet" th:href="@{css/styles.css}"/>
+    </head>
+    <body style="">
+   
+    <div>
+	    	<div layout:fragment="content">
+	    		 <div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="card border-secondary mb-3" style="max-width: 30rem;">
+		<div class="card-header">Vegan's Shoppie</div>
+			<div class="card-body">
+				<p class="card-text">
+			    	<form>
+					  <fieldset>
+					    <legend>Admin</legend>
+					    <div class="form-group">
+					      <label for="exampleInputEmail1">Email address</label>
+					      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username">
+					   </div>
+					    <div class="form-group">
+					      <label for="exampleInputPassword1">Password</label>
+					      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					    </div>
+					    
+					    </fieldset>
+					    <button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</p>
+			</div>
+		</div>
+  </div>
+</div>
+
+			</div>   
+		</div>
+    </body>
+</html>

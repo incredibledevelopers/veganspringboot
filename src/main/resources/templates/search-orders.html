@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layouts/loggedin-layout}">
+   	<head>
+    	<script th:src="@{js/orders.js}"></script>	
+    	<script th:inline="javascript">
+     	/*<![CDATA[*/
+     		$( function() {
+			    $( "#fromdatepicker" ).datepicker({ dateFormat: 'yy-mm-dd'});
+			    $( "#todatepicker" ).datepicker({ dateFormat: 'yy-mm-dd'});
+			});
+     	
+     		function validateSearch(){
+     			if(isBlank('#orderId') && isBlank('#mobileNumber') && isBlank('#address') 
+     					&& isBlank('#fromdatepicker') && isBlank('#todatepicker')){
+     			      alert('Please select atleast one search criteria.');
+     			      $('#mobileNumber').focus();
+     			      return false;
+     			}else{
+     				 $("#searchOrderForm"). submit();
+     			}
+     		}
+    	/*]]>*/
+    	</script>
+   	</head>
+	<body>
+	<div layout:fragment="content">
+		<div class="container applicationHost">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item active">Home</li>
+			</ol>
+			<form action="#" th:action="@{/search-orders}" th:object="${searchOrder}" id="searchOrderForm" method="post">
+			  <fieldset>
+			    <legend>Search Orders</legend>
+			    <div class="form-row"> 
+			    	<div class="form-group col-md-2">
+				       <label for="mobileNumber">Order Id</label>
+				       <input type="text" class="form-control" th:field="*{orderId}" 
+				       	name="orderId" id="orderId" placeholder="Order Id" maxlength="20">
+				    </div>
+				    <div class="form-group col-md-2">
+				       <label for="mobileNumber">Mobile</label>
+				       <input type="text" class="form-control" th:field="*{mobileNumber}" 
+				       	name="mobileNumber" id="mobileNumber" placeholder="Mobile Number" maxlength="10">
+				    </div>
+				    <div class="form-group col-md-4">
+				    	 <label for="address">Address</label>
+					   	  <input type="text" class="form-control" th:field="*{address}" 
+					   	  name="address" id="address" placeholder="Address" maxlength="50">
+					</div>
+					<div class="form-group col-md-2">
+				       <label for="fromDate">From Date</label>
+				       <input type="text" class="form-control" th:field="*{fromDate}"
+				       name="fromDate" id="fromdatepicker" placeholder="From Date">
+				    </div>
+				    <div class="form-group col-md-2">
+				    	 <label for="toDate">To Date</label>
+					   	  <input type="text" class="form-control" th:field="*{toDate}"
+					   	  name="toDate" id="todatepicker" placeholder="To Date">
+					</div>
+				</div>
+			   <button type="button" onclick="javascript:validateSearch()" class="btn btn-primary">Search</button>	
+			  </fieldset>
+			 </form><br/>  
+			 <div class="input-group"> <span class="input-group-addon">Filter :&nbsp;</span>
+					    <input id="filter" type="text" class="form-control" placeholder="Type here...">
+				</div>
+				<br/>
+			 <table class="table w-auto small table-hover" id="ordersTable">
+				<thead>
+					 <tr>
+					 	<th>Order Id</th>
+					 	<th>Customer</th>
+					    <th>Mobile</th>
+					    <th>Address</th>
+					    <th>Item Name</th>
+					    <th>Item Qty(in gms/pcs)</th>
+					    <th>Item Total Price(in &#x20B9;)</th>
+					    <th>Delivery Charges(in &#x20B9;)</th>
+					    <th>Order Total(in &#x20B9;)</th>
+					    <th>Order Time</th>
+					    <th>Order Status</th>
+					    <th>Cancellation Reason</th>
+					</tr>
+				</thead>
+				<tbody class="searchable">	
+					<tr th:if="${#lists.isEmpty(searchOrders)}">
+						<td colspan="8" align="center"> No Orders  </td> 
+					</tr>
+					<tr th:if="${not #lists.isEmpty(searchOrders)}" th:each="order : ${searchOrders}">
+						<td><a th:href="@{/showOrder?d=}+ ${order.orderId}" th:text="${order.mobileNumber} != null ? ${order.orderId}:''"></a></td>
+						<td th:text="${order.customerName}"></td>
+				        <td th:text="${order.mobileNumber}"></td>
+				        <td th:text="${order.orderAddress}"></td>
+				        <td th:text="${order.itemName}"></td>
+				        <td th:text="${order.itemQuantity}" align="right"></td>
+				        <td th:text="${order.itemTotalPrice}" align="right"></td>
+				        <td th:text="${order.mobileNumber} != null ? ${order.deliveryCharges}:''" align="right"></td>
+				        <td th:text="${order.mobileNumber} != null ? ${order.orderTotal}:''" align="right"></td>
+				        <td th:text="${order.mobileNumber} != null ? ${order.orderTime}:''"></td>
+				        <td th:if="${order.orderStatus} eq 'P'">Pending</td>
+				        <td th:if="${order.orderStatus} eq 'D'">Delivered</td>
+				        <td th:if="${order.orderStatus} eq 'C'">Cancelled</td>
+				        <td th:text="${order.mobileNumber} != null ? ${order.cancellationReason}:''"></td>
+				    </tr>
+			    </tbody>
+			</table>  
+		</div>
+	</div>		
+</body>
+</html>
+
+
