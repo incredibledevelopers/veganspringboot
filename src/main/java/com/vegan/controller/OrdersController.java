@@ -27,7 +27,7 @@ import com.vegan.dataobject.Response;
 import com.vegan.model.ItemOrders;
 import com.vegan.service.ItemOrdersService;
 
-@CrossOrigin(exposedHeaders="Access-Control-Allow-Origin")
+@CrossOrigin(origins = "*", maxAge = 36000)
 @Controller
 public class OrdersController {
 	
