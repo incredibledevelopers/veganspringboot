@@ -22,7 +22,7 @@ import com.vegan.dataobject.ProductForm;
 import com.vegan.model.Items;
 import com.vegan.service.ItemsService;
 
-@CrossOrigin(origins = "http://worldempower.in/", maxAge = 36000)
+@CrossOrigin(origins = "*", maxAge = 36000)
 @Controller
 public class ItemsController {
 
