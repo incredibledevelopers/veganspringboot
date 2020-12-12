@@ -10,7 +10,7 @@ import com.vegan.model.Items;
 
 public interface ItemsRepository extends CrudRepository<Items, Long> {
 
-	@Query("select items from items_master items where item_availability='Y'")
+	@Query("select items from items_master items where item_availability='Y' order by id")
 	List<Items> findAvailableItems();
 	
 	@Query("select items from items_master items")

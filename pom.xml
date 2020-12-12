@@ -8,7 +8,7 @@
 	<artifactId>enroot-farming</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>vegan</name>
-   
+    <packaging>war</packaging>
  
     <parent>
         <groupId>org.springframework.boot</groupId>

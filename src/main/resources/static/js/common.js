@@ -19,5 +19,10 @@ $(document).ready(function () {
             return rex.test($(this).text());
         }).show();
 
-    })
+    });
+	
+	var navMain = $(".navbar-collapse"); 
+    navMain.on("click", "a:not([data-toggle])", null, function () {
+        navMain.collapse('hide');
+    });
 });
